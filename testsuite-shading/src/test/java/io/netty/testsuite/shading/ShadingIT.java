@@ -18,6 +18,7 @@ package io.netty.testsuite.shading;
 import io.netty.util.internal.PlatformDependent;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.Assume;
 
 import java.lang.reflect.Method;
 
@@ -28,6 +29,8 @@ public class ShadingIT {
 
     @Test
     public void testShadingNativeTransport() throws Exception {
+        // Skip on windows.
+        Assume.assumeFalse(PlatformDependent.isWindows());
         String className = PlatformDependent.isOsx() ?
                 "io.netty.channel.kqueue.KQueue" : "io.netty.channel.epoll.Epoll";
         testShading0(SHADING_PREFIX, className);
